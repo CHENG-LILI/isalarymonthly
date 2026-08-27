@@ -1,1 +1,2221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
 
+<meta name="viewport"
+      content="width=device-width,
+      initial-scale=1.0,
+      maximum-scale=1.0,
+      user-scalable=no">
+
+<title>薪俸簿</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    margin: 0;
+    background: #f6f7fb;
+    color: #222;
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        "PingFang SC",
+        "Microsoft YaHei",
+        sans-serif;
+}
+
+button,
+input,
+textarea {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+.app {
+    width: 100%;
+    max-width: 600px;
+    min-height: 100vh;
+    margin: auto;
+    padding-bottom: 90px;
+}
+
+
+/* =========================
+   顶部
+========================= */
+
+.header {
+    padding: 34px 20px 30px;
+    color: white;
+    background: linear-gradient(
+        135deg,
+        #6557e8,
+        #8679ff
+    );
+    border-radius: 0 0 28px 28px;
+}
+
+.header-title {
+    font-size: 29px;
+    font-weight: 750;
+    letter-spacing: 1px;
+}
+
+.header-subtitle {
+    margin-top: 7px;
+    font-size: 13px;
+    opacity: .85;
+}
+
+
+/* =========================
+   首页数据
+========================= */
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 9px;
+    padding: 16px;
+}
+
+.stat-card {
+    background: white;
+    border-radius: 17px;
+    padding: 15px 9px;
+    box-shadow:
+        0 4px 18px rgba(0,0,0,.045);
+}
+
+.stat-label {
+    font-size: 12px;
+    color: #999;
+}
+
+.stat-value {
+    margin-top: 7px;
+    font-size: 17px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+
+/* =========================
+   内容
+========================= */
+
+.page {
+    padding: 0 16px;
+}
+
+.section-title {
+    margin: 9px 0 13px;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+
+/* =========================
+   主按钮
+========================= */
+
+.primary-btn {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 15px;
+    background: #6b5ce7;
+    color: white;
+    font-size: 16px;
+    font-weight: 650;
+    box-shadow:
+        0 7px 18px rgba(107,92,231,.18);
+}
+
+.primary-btn:active {
+    transform: scale(.985);
+    opacity: .9;
+}
+
+
+/* =========================
+   工资卡片
+========================= */
+
+.salary-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.salary-card {
+    padding: 17px;
+    background: white;
+    border-radius: 18px;
+    box-shadow:
+        0 4px 18px rgba(0,0,0,.045);
+}
+
+.salary-card:active {
+    transform: scale(.99);
+}
+
+.salary-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.salary-month {
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.salary-money {
+    font-size: 20px;
+    font-weight: 750;
+}
+
+.salary-company {
+    margin-top: 8px;
+    color: #777;
+    font-size: 13px;
+}
+
+.salary-date {
+    margin-top: 5px;
+    color: #aaa;
+    font-size: 12px;
+}
+
+
+/* =========================
+   空状态
+========================= */
+
+.empty {
+    padding: 55px 20px;
+    text-align: center;
+    color: #999;
+}
+
+.empty-icon {
+    margin-bottom: 10px;
+    font-size: 42px;
+}
+
+
+/* =========================
+   底部导航
+========================= */
+
+.bottom-nav {
+    position: fixed;
+    z-index: 100;
+    bottom: 0;
+    left: 50%;
+    width: min(600px,100%);
+    height: 72px;
+    transform: translateX(-50%);
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    background: rgba(255,255,255,.96);
+    backdrop-filter: blur(15px);
+    border-top: 1px solid #eee;
+}
+
+.nav-item {
+    border: none;
+    background: transparent;
+    color: #999;
+    font-size: 12px;
+}
+
+.nav-item.active {
+    color: #6557e8;
+    font-weight: 700;
+}
+
+.nav-icon {
+    display: block;
+    margin-bottom: 3px;
+    font-size: 22px;
+}
+
+
+/* =========================
+   表单页面
+========================= */
+
+.form-page {
+    padding: 22px 16px 100px;
+}
+
+.back-btn {
+    margin-bottom: 17px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: #6557e8;
+    font-size: 16px;
+}
+
+.form-title {
+    margin-bottom: 22px;
+    font-size: 26px;
+    font-weight: 750;
+}
+
+.form-section {
+    margin-bottom: 15px;
+    padding: 17px;
+    background: white;
+    border-radius: 19px;
+}
+
+.form-section-title {
+    margin-bottom: 17px;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.form-group {
+    margin-bottom: 17px;
+}
+
+.form-group:last-child {
+    margin-bottom: 0;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 13px;
+    outline: none;
+    border: 1px solid #e4e4e8;
+    border-radius: 12px;
+    background: #fff;
+}
+
+input:focus,
+textarea:focus {
+    border-color: #6b5ce7;
+}
+
+input[type="number"] {
+    font-size: 16px;
+}
+
+textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+
+/* =========================
+   金额汇总
+========================= */
+
+.total-box {
+    margin-top: 13px;
+    padding: 16px;
+    background: #f4f2ff;
+    border-radius: 15px;
+}
+
+.total-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 9px;
+}
+
+.total-row:last-child {
+    margin-bottom: 0;
+}
+
+.total-final {
+    font-size: 19px;
+}
+
+
+/* =========================
+   详情
+========================= */
+
+.detail-page {
+    padding: 22px 16px 100px;
+}
+
+.detail-header {
+    margin-bottom: 16px;
+    padding: 25px 20px;
+    color: white;
+    background: linear-gradient(
+        135deg,
+        #6557e8,
+        #8679ff
+    );
+    border-radius: 22px;
+}
+
+.detail-month {
+    font-size: 15px;
+    opacity: .85;
+}
+
+.detail-money {
+    margin-top: 7px;
+    font-size: 36px;
+    font-weight: 750;
+}
+
+.detail-label {
+    margin-top: 4px;
+    font-size: 13px;
+    opacity: .85;
+}
+
+.detail-section {
+    margin-bottom: 14px;
+    padding: 18px;
+    background: white;
+    border-radius: 18px;
+}
+
+.detail-section-title {
+    margin-bottom: 13px;
+    font-weight: 700;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 9px 0;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+}
+
+.detail-row span:first-child {
+    color: #777;
+}
+
+.negative {
+    color: #e25757;
+}
+
+.detail-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.edit-btn {
+    padding: 14px;
+    border: none;
+    border-radius: 13px;
+    background: #6557e8;
+    color: white;
+}
+
+.delete-btn {
+    padding: 14px;
+    border: none;
+    border-radius: 13px;
+    background: #fff0f0;
+    color: #e25757;
+}
+
+
+/* =========================
+   统计
+========================= */
+
+.chart-box {
+    margin-bottom: 15px;
+    padding: 18px;
+    background: white;
+    border-radius: 19px;
+}
+
+.bar-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    height: 230px;
+    padding-top: 20px;
+    overflow-x: auto;
+}
+
+.bar-item {
+    min-width: 42px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.bar {
+    width: 27px;
+    min-height: 3px;
+    background: #6b5ce7;
+    border-radius: 7px 7px 2px 2px;
+}
+
+.bar-money {
+    margin-bottom: 5px;
+    color: #777;
+    font-size: 9px;
+    white-space: nowrap;
+}
+
+.bar-label {
+    margin-top: 6px;
+    color: #888;
+    font-size: 11px;
+}
+
+.year-summary {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.summary-card {
+    padding: 17px;
+    background: white;
+    border-radius: 17px;
+}
+
+.summary-label {
+    color: #888;
+    font-size: 13px;
+}
+
+.summary-money {
+    margin-top: 8px;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+
+/* =========================
+   小屏幕
+========================= */
+
+@media(max-width:380px){
+
+    .stats {
+        gap: 6px;
+        padding: 12px;
+    }
+
+    .stat-card {
+        padding: 13px 6px;
+    }
+
+    .stat-value {
+        font-size: 15px;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div id="app"></div>
+
+
+<script>
+
+/* =====================================================
+   薪俸簿 V1
+   数据存储：浏览器 localStorage
+===================================================== */
+
+const STORAGE_KEY = "isalarybook_v1";
+
+let salaries =
+    JSON.parse(
+        localStorage.getItem(STORAGE_KEY) || "[]"
+    );
+
+let editingId = null;
+let detailId = null;
+
+
+/* =====================================================
+   数据保存
+===================================================== */
+
+function saveData(){
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(salaries)
+    );
+
+}
+
+
+/* =====================================================
+   金额格式
+===================================================== */
+
+function money(value){
+
+    value = Number(value) || 0;
+
+    return "¥" + value.toLocaleString(
+        "zh-CN",
+        {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }
+    );
+
+}
+
+
+function getNumber(id){
+
+    const element =
+        document.getElementById(id);
+
+    return Number(
+        element ? element.value : 0
+    ) || 0;
+
+}
+
+
+/* =====================================================
+   防止特殊字符
+===================================================== */
+
+function escapeHtml(text){
+
+    return String(text || "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+}
+
+
+/* =====================================================
+   底部导航
+===================================================== */
+
+function bottomNav(active){
+
+    return `
+
+        <div class="bottom-nav">
+
+            <button
+                class="nav-item ${active==="home"?"active":""}"
+                onclick="renderHome()">
+
+                <span class="nav-icon">🏠</span>
+
+                首页
+
+            </button>
+
+
+            <button
+                class="nav-item ${active==="list"?"active":""}"
+                onclick="renderList()">
+
+                <span class="nav-icon">🧾</span>
+
+                工资条
+
+            </button>
+
+
+            <button
+                class="nav-item ${active==="stats"?"active":""}"
+                onclick="renderStats()">
+
+                <span class="nav-icon">📊</span>
+
+                统计
+
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   首页
+===================================================== */
+
+function renderHome(){
+
+    const now =
+        new Date();
+
+    const year =
+        now.getFullYear();
+
+    const month =
+        now.toISOString().slice(0,7);
+
+
+    const monthTotal =
+        salaries
+        .filter(item =>
+            item.month === month
+        )
+        .reduce(
+            (sum,item) =>
+                sum + Number(item.net || 0),
+            0
+        );
+
+
+    const yearData =
+        salaries.filter(item =>
+            item.month &&
+            Number(item.month.slice(0,4)) === year
+        );
+
+
+    const yearTotal =
+        yearData.reduce(
+            (sum,item) =>
+                sum + Number(item.net || 0),
+            0
+        );
+
+
+    const monthSet =
+        new Set(
+            yearData.map(item => item.month)
+        );
+
+
+    const average =
+        monthSet.size
+        ? yearTotal / monthSet.size
+        : 0;
+
+
+    const recent =
+        [...salaries]
+        .sort(
+            (a,b) =>
+                (b.month || "")
+                .localeCompare(
+                    a.month || ""
+                )
+        )
+        .slice(0,5);
+
+
+    document.getElementById("app").innerHTML = `
+
+        <div class="app">
+
+            <div class="header">
+
+                <div class="header-title">
+                    薪俸簿
+                </div>
+
+                <div class="header-subtitle">
+                    记录每一份工资，掌握收入变化
+                </div>
+
+            </div>
+
+
+            <div class="stats">
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+                        本月实发
+                    </div>
+
+                    <div class="stat-value">
+                        ${money(monthTotal)}
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+                        本年累计
+                    </div>
+
+                    <div class="stat-value">
+                        ${money(yearTotal)}
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+                        月均工资
+                    </div>
+
+                    <div class="stat-value">
+                        ${money(average)}
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="page">
+
+                <button
+                    class="primary-btn"
+                    onclick="showAddPage()">
+
+                    ＋ 添加工资条
+
+                </button>
+
+
+                <div class="section-title">
+                    最近工资
+                </div>
+
+
+                <div class="salary-list">
+
+                    ${
+                        recent.length
+                        ? recent
+                            .map(salaryCard)
+                            .join("")
+                        :
+                        `
+                            <div class="empty">
+
+                                <div class="empty-icon">
+                                    💰
+                                </div>
+
+                                <div>
+                                    还没有工资记录
+                                </div>
+
+                                <div
+                                    style="
+                                    margin-top:6px;
+                                    font-size:13px;
+                                    ">
+
+                                    添加第一份工资条吧
+
+                                </div>
+
+                            </div>
+                        `
+                    }
+
+                </div>
+
+            </div>
+
+
+            ${bottomNav("home")}
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   工资卡片
+===================================================== */
+
+function salaryCard(item){
+
+    return `
+
+        <div
+            class="salary-card"
+            onclick="showDetail('${item.id}')">
+
+            <div class="salary-top">
+
+                <div class="salary-month">
+                    ${escapeHtml(item.month)}
+                </div>
+
+                <div class="salary-money">
+                    ${money(item.net)}
+                </div>
+
+            </div>
+
+
+            <div class="salary-company">
+
+                ${escapeHtml(
+                    item.company || "未填写单位"
+                )}
+
+            </div>
+
+
+            <div class="salary-date">
+
+                发薪日期：
+                ${escapeHtml(
+                    item.payDate || "未填写"
+                )}
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   工资条列表
+===================================================== */
+
+function renderList(){
+
+    const data =
+        [...salaries]
+        .sort(
+            (a,b) =>
+                (b.month || "")
+                .localeCompare(
+                    a.month || ""
+                )
+        );
+
+
+    document.getElementById("app").innerHTML = `
+
+        <div class="app">
+
+            <div class="header">
+
+                <div class="header-title">
+                    工资条
+                </div>
+
+                <div class="header-subtitle">
+                    共 ${salaries.length} 条记录
+                </div>
+
+            </div>
+
+
+            <div class="page">
+
+                <div style="height:16px"></div>
+
+
+                <button
+                    class="primary-btn"
+                    onclick="showAddPage()">
+
+                    ＋ 添加工资条
+
+                </button>
+
+
+                <div style="height:20px"></div>
+
+
+                <div class="salary-list">
+
+                    ${
+                        data.length
+                        ?
+                        data.map(salaryCard).join("")
+                        :
+                        `
+                            <div class="empty">
+
+                                <div class="empty-icon">
+                                    🧾
+                                </div>
+
+                                暂无工资条
+
+                            </div>
+                        `
+                    }
+
+                </div>
+
+            </div>
+
+
+            ${bottomNav("list")}
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   添加 / 编辑工资条
+===================================================== */
+
+function showAddPage(id = null){
+
+    editingId = id;
+
+
+    const item =
+        id
+        ? salaries.find(x => x.id === id)
+        : null;
+
+
+    const defaultMonth =
+        new Date()
+        .toISOString()
+        .slice(0,7);
+
+
+    document.getElementById("app").innerHTML = `
+
+        <div class="app">
+
+            <div class="form-page">
+
+
+                <button
+                    class="back-btn"
+                    onclick="backFromForm()">
+
+                    ← 返回
+
+                </button>
+
+
+                <div class="form-title">
+
+                    ${
+                        item
+                        ? "编辑工资条"
+                        : "添加工资条"
+                    }
+
+                </div>
+
+
+                <!-- 基本信息 -->
+
+                <div class="form-section">
+
+                    <div class="form-section-title">
+                        基本信息
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label class="form-label">
+                            工资月份
+                        </label>
+
+                        <input
+                            id="month"
+                            type="month"
+                            value="${
+                                item?.month ||
+                                defaultMonth
+                            }">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label class="form-label">
+                            发薪日期
+                        </label>
+
+                        <input
+                            id="payDate"
+                            type="date"
+                            value="${
+                                item?.payDate || ""
+                            }">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label class="form-label">
+                            公司 / 单位
+                        </label>
+
+                        <input
+                            id="company"
+                            type="text"
+                            placeholder="例如：XX有限公司"
+                            value="${
+                                escapeHtml(
+                                    item?.company || ""
+                                )
+                            }">
+
+                    </div>
+
+                </div>
+
+
+                <!-- 应发 -->
+
+                <div class="form-section">
+
+                    <div class="form-section-title">
+                        应发工资
+                    </div>
+
+
+                    ${moneyInput(
+                        "基本工资",
+                        "basic",
+                        item
+                    )}
+
+                    ${moneyInput(
+                        "岗位工资",
+                        "position",
+                        item
+                    )}
+
+                    ${moneyInput(
+                        "绩效工资",
+                        "performance",
+                        item
+                    )}
+
+                    ${moneyInput(
+                        "奖金",
+                        "bonus",
+                        item
+                    )}
+
+                    ${moneyInput(
+                        "补贴",
+                        "allowance",
+                        item
+                    )}
+
+                    ${moneyInput(
+                        "加班费",
+                        "overtime",
+                        item
+                    )}
+
+                    ${moneyInput(
+                        "其他应发",
+                        "otherIncome",
+                        item
+                    )}
+
+
+                    <div class="total-box">
+
+                        <div class="total-row">
+
+                            <span>
+                                应发合计
+                            </span>
+
+                            <strong
+                                id="grossPreview">
+                                ¥0.00
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- 扣款 -->
+
+                <div class="form-section">
+
+                    <div class="form-section-title">
+                        扣款项目
+                    </div>
+
+
+                    ${moneyInput(
+                        "社保",
+                        "social",
+                        item
+                    )}
+
+                    ${moneyInput(
+                        "公积金",
+                        "housing",
+                        item
+                    )}
+
+                    ${moneyInput(
+                        "个人所得税",
+                        "tax",
+                        item
+                    )}
+
+                    ${moneyInput(
+                        "其他扣款",
+                        "otherDeduction",
+                        item
+                    )}
+
+
+                    <div class="total-box">
+
+                        <div class="total-row">
+
+                            <span>
+                                扣款合计
+                            </span>
+
+                            <strong
+                                id="deductionPreview">
+                                ¥0.00
+                            </strong>
+
+                        </div>
+
+
+                        <div
+                            class="total-row total-final">
+
+                            <span>
+                                实发工资
+                            </span>
+
+                            <strong
+                                id="netPreview">
+                                ¥0.00
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- 备注 -->
+
+                <div class="form-section">
+
+                    <div class="form-section-title">
+                        备注
+                    </div>
+
+                    <textarea
+                        id="remark"
+                        placeholder="例如：本月包含年终奖、调薪等"
+                    >${
+                        escapeHtml(
+                            item?.remark || ""
+                        )
+                    }</textarea>
+
+                </div>
+
+
+                <button
+                    class="primary-btn"
+                    onclick="saveSalary()">
+
+                    ${
+                        item
+                        ? "保存修改"
+                        : "保存工资条"
+                    }
+
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    document
+        .querySelectorAll(
+            'input[type="number"]'
+        )
+        .forEach(input => {
+
+            input.addEventListener(
+                "input",
+                updatePreview
+            );
+
+        });
+
+
+    updatePreview();
+
+}
+
+
+/* =====================================================
+   金额输入框
+===================================================== */
+
+function moneyInput(label,id,item){
+
+    return `
+
+        <div class="form-group">
+
+            <label class="form-label">
+                ${label}
+            </label>
+
+            <input
+                id="${id}"
+                type="number"
+                inputmode="decimal"
+                min="0"
+                step="0.01"
+                placeholder="0.00"
+                value="${
+                    item?.[id] || ""
+                }">
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   实时计算
+===================================================== */
+
+function updatePreview(){
+
+    const incomes = [
+
+        "basic",
+        "position",
+        "performance",
+        "bonus",
+        "allowance",
+        "overtime",
+        "otherIncome"
+
+    ];
+
+
+    const deductions = [
+
+        "social",
+        "housing",
+        "tax",
+        "otherDeduction"
+
+    ];
+
+
+    const gross =
+        incomes.reduce(
+            (sum,id) =>
+                sum + getNumber(id),
+            0
+        );
+
+
+    const deduction =
+        deductions.reduce(
+            (sum,id) =>
+                sum + getNumber(id),
+            0
+        );
+
+
+    const net =
+        gross - deduction;
+
+
+    document.getElementById(
+        "grossPreview"
+    ).innerText = money(gross);
+
+
+    document.getElementById(
+        "deductionPreview"
+    ).innerText = money(deduction);
+
+
+    document.getElementById(
+        "netPreview"
+    ).innerText = money(net);
+
+}
+
+
+/* =====================================================
+   保存工资条
+===================================================== */
+
+function saveSalary(){
+
+    const incomeIds = [
+
+        "basic",
+        "position",
+        "performance",
+        "bonus",
+        "allowance",
+        "overtime",
+        "otherIncome"
+
+    ];
+
+
+    const deductionIds = [
+
+        "social",
+        "housing",
+        "tax",
+        "otherDeduction"
+
+    ];
+
+
+    const data = {
+
+        id:
+            editingId ||
+            Date.now().toString(),
+
+        month:
+            document.getElementById(
+                "month"
+            ).value,
+
+        payDate:
+            document.getElementById(
+                "payDate"
+            ).value,
+
+        company:
+            document.getElementById(
+                "company"
+            ).value.trim(),
+
+
+        basic:
+            getNumber("basic"),
+
+        position:
+            getNumber("position"),
+
+        performance:
+            getNumber("performance"),
+
+        bonus:
+            getNumber("bonus"),
+
+        allowance:
+            getNumber("allowance"),
+
+        overtime:
+            getNumber("overtime"),
+
+        otherIncome:
+            getNumber("otherIncome"),
+
+
+        social:
+            getNumber("social"),
+
+        housing:
+            getNumber("housing"),
+
+        tax:
+            getNumber("tax"),
+
+        otherDeduction:
+            getNumber("otherDeduction"),
+
+
+        remark:
+            document.getElementById(
+                "remark"
+            ).value.trim()
+
+    };
+
+
+    data.gross =
+        incomeIds.reduce(
+            (sum,id) =>
+                sum + Number(data[id] || 0),
+            0
+        );
+
+
+    data.deduction =
+        deductionIds.reduce(
+            (sum,id) =>
+                sum + Number(data[id] || 0),
+            0
+        );
+
+
+    data.net =
+        data.gross -
+        data.deduction;
+
+
+    if(!data.month){
+
+        alert("请选择工资月份");
+
+        return;
+
+    }
+
+
+    if(editingId){
+
+        const index =
+            salaries.findIndex(
+                x => x.id === editingId
+            );
+
+
+        if(index !== -1){
+
+            salaries[index] = data;
+
+        }
+
+    }else{
+
+        salaries.push(data);
+
+    }
+
+
+    saveData();
+
+
+    editingId = null;
+
+    detailId = data.id;
+
+
+    showDetail(data.id);
+
+}
+
+
+/* =====================================================
+   工资详情
+===================================================== */
+
+function showDetail(id){
+
+    detailId = id;
+
+
+    const item =
+        salaries.find(
+            x => x.id === id
+        );
+
+
+    if(!item){
+
+        renderHome();
+
+        return;
+
+    }
+
+
+    document.getElementById("app").innerHTML = `
+
+        <div class="app">
+
+            <div class="detail-page">
+
+
+                <button
+                    class="back-btn"
+                    onclick="renderList()">
+
+                    ← 返回
+
+                </button>
+
+
+                <div class="detail-header">
+
+                    <div class="detail-month">
+
+                        ${escapeHtml(
+                            item.month
+                        )}
+
+                    </div>
+
+
+                    <div class="detail-money">
+
+                        ${money(item.net)}
+
+                    </div>
+
+
+                    <div class="detail-label">
+
+                        实发工资
+
+                    </div>
+
+                </div>
+
+
+                <!-- 基本信息 -->
+
+                <div class="detail-section">
+
+                    <div class="detail-section-title">
+                        基本信息
+                    </div>
+
+
+                    <div class="detail-row">
+
+                        <span>
+                            公司 / 单位
+                        </span>
+
+                        <span>
+                            ${escapeHtml(
+                                item.company || "-"
+                            )}
+                        </span>
+
+                    </div>
+
+
+                    <div class="detail-row">
+
+                        <span>
+                            发薪日期
+                        </span>
+
+                        <span>
+                            ${escapeHtml(
+                                item.payDate || "-"
+                            )}
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- 应发 -->
+
+                <div class="detail-section">
+
+                    <div class="detail-section-title">
+                        应发工资
+                    </div>
+
+
+                    ${detailRow(
+                        "基本工资",
+                        item.basic
+                    )}
+
+                    ${detailRow(
+                        "岗位工资",
+                        item.position
+                    )}
+
+                    ${detailRow(
+                        "绩效工资",
+                        item.performance
+                    )}
+
+                    ${detailRow(
+                        "奖金",
+                        item.bonus
+                    )}
+
+                    ${detailRow(
+                        "补贴",
+                        item.allowance
+                    )}
+
+                    ${detailRow(
+                        "加班费",
+                        item.overtime
+                    )}
+
+                    ${detailRow(
+                        "其他应发",
+                        item.otherIncome
+                    )}
+
+
+                    <div class="detail-row">
+
+                        <strong>
+                            应发合计
+                        </strong>
+
+                        <strong>
+                            ${money(item.gross)}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- 扣款 -->
+
+                <div class="detail-section">
+
+                    <div class="detail-section-title">
+                        扣款项目
+                    </div>
+
+
+                    ${detailRow(
+                        "社保",
+                        item.social,
+                        true
+                    )}
+
+                    ${detailRow(
+                        "公积金",
+                        item.housing,
+                        true
+                    )}
+
+                    ${detailRow(
+                        "个人所得税",
+                        item.tax,
+                        true
+                    )}
+
+                    ${detailRow(
+                        "其他扣款",
+                        item.otherDeduction,
+                        true
+                    )}
+
+
+                    <div class="detail-row">
+
+                        <strong>
+                            扣款合计
+                        </strong>
+
+                        <strong class="negative">
+
+                            -${money(item.deduction)}
+
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                ${
+                    item.remark
+                    ?
+                    `
+                    <div class="detail-section">
+
+                        <div class="detail-section-title">
+                            备注
+                        </div>
+
+                        <div
+                            style="
+                            line-height:1.7;
+                            color:#555;
+                            ">
+
+                            ${escapeHtml(
+                                item.remark
+                            )}
+
+                        </div>
+
+                    </div>
+                    `
+                    :
+                    ""
+                }
+
+
+                <div class="detail-actions">
+
+
+                    <button
+                        class="edit-btn"
+                        onclick="
+                            showAddPage('${item.id}')
+                        ">
+
+                        ✏️ 编辑
+
+                    </button>
+
+
+                    <button
+                        class="delete-btn"
+                        onclick="
+                            deleteSalary('${item.id}')
+                        ">
+
+                        🗑️ 删除
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   详情行
+===================================================== */
+
+function detailRow(
+    label,
+    value,
+    negative = false
+){
+
+    value =
+        Number(value) || 0;
+
+
+    return `
+
+        <div class="detail-row">
+
+            <span>
+                ${label}
+            </span>
+
+            <span
+                class="${negative ? "negative" : ""}">
+
+                ${
+                    negative
+                    ? "-" + money(value)
+                    : money(value)
+                }
+
+            </span>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   删除
+===================================================== */
+
+function deleteSalary(id){
+
+    const ok =
+        confirm(
+            "确定要删除这条工资记录吗？"
+        );
+
+
+    if(!ok){
+
+        return;
+
+    }
+
+
+    salaries =
+        salaries.filter(
+            x => x.id !== id
+        );
+
+
+    saveData();
+
+
+    detailId = null;
+
+
+    renderList();
+
+}
+
+
+/* =====================================================
+   统计页面
+===================================================== */
+
+function renderStats(){
+
+    const year =
+        new Date().getFullYear();
+
+
+    const data =
+        salaries
+        .filter(item =>
+            item.month &&
+            Number(
+                item.month.slice(0,4)
+            ) === year
+        )
+        .sort(
+            (a,b) =>
+                a.month.localeCompare(
+                    b.month
+                )
+        );
+
+
+    const monthMap = {};
+
+
+    data.forEach(item => {
+
+        if(!monthMap[item.month]){
+
+            monthMap[item.month] = 0;
+
+        }
+
+
+        monthMap[item.month] +=
+            Number(item.net || 0);
+
+    });
+
+
+    const values =
+        Object.values(monthMap);
+
+
+    const total =
+        values.reduce(
+            (a,b) => a+b,
+            0
+        );
+
+
+    const average =
+        values.length
+        ? total / values.length
+        : 0;
+
+
+    const max =
+        values.length
+        ? Math.max(...values)
+        : 0;
+
+
+    const maxMonth =
+        Object.keys(monthMap)
+        .find(
+            month =>
+                monthMap[month] === max
+        );
+
+
+    let chart = "";
+
+
+    Object.keys(monthMap)
+        .forEach(month => {
+
+            const value =
+                monthMap[month];
+
+
+            const height =
+                max
+                ? Math.max(
+                    5,
+                    value / max * 170
+                )
+                : 5;
+
+
+            chart += `
+
+                <div class="bar-item">
+
+                    <div class="bar-money">
+
+                        ${money(value)}
+
+                    </div>
+
+
+                    <div
+                        class="bar"
+                        style="
+                        height:${height}px
+                        ">
+                    </div>
+
+
+                    <div class="bar-label">
+
+                        ${month.slice(5)}月
+
+                    </div>
+
+                </div>
+
+            `;
+
+        });
+
+
+    document.getElementById("app").innerHTML = `
+
+        <div class="app">
+
+            <div class="header">
+
+                <div class="header-title">
+                    工资统计
+                </div>
+
+                <div class="header-subtitle">
+                    ${year} 年
+                </div>
+
+            </div>
+
+
+            <div class="page">
+
+                <div style="height:16px"></div>
+
+
+                <div class="chart-box">
+
+                    <div class="section-title">
+                        工资趋势
+                    </div>
+
+
+                    ${
+                        chart
+                        ?
+                        `
+                        <div class="bar-chart">
+
+                            ${chart}
+
+                        </div>
+                        `
+                        :
+                        `
+                        <div class="empty">
+
+                            暂无本年工资数据
+
+                        </div>
+                        `
+                    }
+
+                </div>
+
+
+                <div class="year-summary">
+
+
+                    <div class="summary-card">
+
+                        <div class="summary-label">
+                            本年累计
+                        </div>
+
+                        <div class="summary-money">
+                            ${money(total)}
+                        </div>
+
+                    </div>
+
+
+                    <div class="summary-card">
+
+                        <div class="summary-label">
+                            月均工资
+                        </div>
+
+                        <div class="summary-money">
+                            ${money(average)}
+                        </div>
+
+                    </div>
+
+
+                    <div class="summary-card">
+
+                        <div class="summary-label">
+                            最高工资
+                        </div>
+
+                        <div class="summary-money">
+                            ${money(max)}
+                        </div>
+
+                    </div>
+
+
+                    <div class="summary-card">
+
+                        <div class="summary-label">
+                            最高月份
+                        </div>
+
+                        <div
+                            class="summary-money"
+                            style="font-size:17px;">
+
+                            ${maxMonth || "-"}
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            ${bottomNav("stats")}
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   表单返回
+===================================================== */
+
+function backFromForm(){
+
+    if(detailId){
+
+        const exists =
+            salaries.some(
+                x => x.id === detailId
+            );
+
+
+        if(exists){
+
+            showDetail(detailId);
+
+            return;
+
+        }
+
+    }
+
+
+    renderHome();
+
+}
+
+
+/* =====================================================
+   启动 APP
+===================================================== */
+
+renderHome();
+
+</script>
+
+</body>
+</html>
