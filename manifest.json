@@ -1,0 +1,10 @@
+{
+  "name": "薪俸簿",
+  "short_name": "薪俸簿",
+  "description": "记录每一份工资，掌握收入变化",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f6f7fb",
+  "theme_color": "#6557e8",
+  "orientation": "portrait"
+}
